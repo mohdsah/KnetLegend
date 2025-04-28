@@ -1,24 +1,36 @@
-/* Modern Medieval Theme */
+/* Variabel CSS */
+:root {
+    --gold: #d4af37;
+    --dark-red: #5a3921;
+}
+
 body {
     margin: 0;
-    background: #0f0c0c url('assets/images/bg.jpg') no-repeat center center;
-    background-size: cover;
-    color: #e0c070;
+    background: #0f0c0c;
     font-family: 'MedievalSharp', cursive;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
 }
 
-.game-container {
-    background: rgba(26, 18, 11, 0.8);
-    border: 3px solid #5a3921;
-    border-radius: 10px;
-    padding: 2rem;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    max-width: 90%;
+#game-canvas {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 3px solid var(--gold);
 }
 
-/* ... (rest of your CSS styles) ... */
+#hp-bar {
+    height: 20px;
+    background: linear-gradient(to right, #f00, #0f0);
+    transition: width 0.3s;
+}
+
+/* Mobile Controls */
+@media (max-width: 768px) {
+    #mobile-controls {
+        position: fixed;
+        bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
