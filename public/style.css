@@ -1,0 +1,24 @@
+/* Modern Medieval Theme */
+body {
+    margin: 0;
+    background: #0f0c0c url('assets/images/bg.jpg') no-repeat center center;
+    background-size: cover;
+    color: #e0c070;
+    font-family: 'MedievalSharp', cursive;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.game-container {
+    background: rgba(26, 18, 11, 0.8);
+    border: 3px solid #5a3921;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    max-width: 90%;
+}
+
+/* ... (rest of your CSS styles) ... */
