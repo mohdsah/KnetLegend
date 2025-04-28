@@ -1,60 +1,38 @@
-// Firebase Configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAhhEtEeG_niZnzbKr08GY7DDyfU_XSELY",
-  authDomain: "knetlegend.firebaseapp.com",
-  databaseURL: "https://knetlegend-default-rtdb.firebaseio.com", // PASTIKAN INI ADA!
-  projectId: "knetlegend",
-  storageBucket: "knetlegend.firebasestorage.app",
-  messagingSenderId: "877515833109",
-  appId: "1:877515833109:web:f5f73094482ddd2c1cf31c",
-  measurementId: "G-W83J3WB719"
-};
+import { initGameEngine } from './game-engine.js';
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+// Inisialisasi Firebase
+const firebaseConfig = { /* ... config Anda ... */ };
+firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Game State
-let score = 100;
-let hp = 5;
-const playerId = "player_" + Math.random().toString(36).substr(2, 9);
+// State Game
+const gameState = {
+    score: 0,
+    hp: 100,
+    level: 1
+};
 
-// DOM Elements
-const scoreElement = document.getElementById('score');
-const hpElement = document.getElementById('hp');
-const attackBtn = document.getElementById('attack-btn');
-
-// Attack Function
-attackBtn.addEventListener('click', () => {
-    score += 10;
-    hp -= 1;
-    
-    updateGameDisplay();
-    saveGameState();
-    
-    if (hp <= 0) gameOver();
+// Init Engine
+const engine = initGameEngine({
+    canvas: document.getElementById('game-canvas'),
+    onAttack: handleAttack,
+    onDamage: takeDamage
 });
 
-function updateGameDisplay() {
-    scoreElement.textContent = score;
-    hpElement.textContent = `HP: ${'♥'.repeat(hp)}`;
+// Event Listeners
+document.getElementById('start-btn').addEventListener('click', () => {
+    document.getElementById('splash-screen').classList.add('hidden');
+    document.getElementById('game-container').classList.remove('hidden');
+    engine.start();
+});
+
+// Sistem Pertarungan
+function handleAttack() {
+    gameState.score += 10;
+    updateHUD();
 }
 
-function saveGameState() {
-    firebase.database().ref('players/' + playerId).set({
-        score: score,
-        hp: hp,
-        lastUpdated: firebase.database.ServerValue.TIMESTAMP
-    });
-}
-
-function gameOver() {
-    alert(`Game Over! Final Score: ${score}`);
-    resetGame();
-}
-
-function resetGame() {
-    score = 100;
-    hp = 5;
-    updateGameDisplay();
+function takeDamage(amount) {
+    gameState.hp -= amount;
+    if (gameState.hp <= 0) gameOver();
 }
